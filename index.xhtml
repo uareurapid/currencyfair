@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Exchange Rates</title>
+    </h:head>
+    <h:body>
+        <h:form>
+                
+                <p:panel id="messagesTableId">
+                  Exchange Messages Output
+                  <p:dataTable lazy="true" emptyMessage="no records found" resizableColumns="false" id="messagesTable"
+                             widgetVar="messagesTableVar" styleClass="datatable"
+                             var="item" rowKey="#{item.id}" selectionMode="single" selection="#{messageConsumerController.selectedMessage}"
+                             value="#{messageConsumerController.allMessages}" paginator="true" rows="10"
+                             rowsPerPageTemplate="10,15,20"> "-->
+
+                    <f:facet name="header">
+                        <p:outputPanel style="float:right;">
+                            <h:outputText value="Search: "/>
+                            <h:inputText id="globalFilter" onkeyup="messagesTableVar.filter()" style="width:150px"/>
+                        </p:outputPanel>
+                    </f:facet>
+
+                    <p:column exportable="false" selectionMode="multiple" style="width: 16px"></p:column>
+
+                    <p:column sortBy="#{item.userid}" filterBy="#{item.userid}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="user id"/>
+
+                        </f:facet>
+                        <h:outputText value="#{item.userid}"/>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.currencyFrom}" filterBy="#{item.currencyFrom}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="currency From"/>
+
+                        </f:facet>
+                        <h:outputText value="#{item.currencyFrom}"/>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.currencyTo}" filterBy="#{item.currencyTo}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="currency To"/>
+
+                        </f:facet>
+                        <h:outputText value="#{item.currencyTo}"/>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.amountBuy}" filterBy="#{item.amountBuy}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="amount Buy"/>
+
+                        </f:facet>
+                        <h:outputText value="#{item.amountBuy}"/>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.amountSell}" filterBy="#{item.amountSell}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="amount Sell"/>
+
+                        </f:facet>
+                        <h:outputText value="#{item.amountSell}"/>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.timePlaced}" filterBy="#{item.timePlaced}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="time Placed"/>
+
+                        </f:facet>
+                        <h:outputText value="#{item.timePlaced}"/>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.originatingCountry}" filterBy="#{item.originatingCountry}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="originating Country"/>
+
+                        </f:facet>
+                        <h:outputText value="#{item.originatingCountry}"/>
+                    </p:column>
+                    
+                    </p:dataTable>
+                  
+                  <br/><hr/>
+                  <p:poll interval="15" update="messagesTableId"/>
+                  <p:chart type="bar" id="countries" model="#{processorController.countryModel}" style="height:300px"/>
+                  <p:chart type="bar" id="buysell" model="#{processorController.amountBuySellModel}" style="height:300px"/>
+
+                </p:panel>
+            
+              
+
+            <p:messages />
+        </h:form>
+    </h:body>
+</html>
+
